@@ -1,0 +1,64 @@
+<div class="row">
+    <div class="col-md-5">
+        <h4>Create Employee</h4>
+        <hr/>
+        <div class="card card-body bg-light">
+            <form class="form-horizantal">
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" [(ngModel)]="employeename" [ngModelOptions]="{standalone: true}" class="form-control" placeholder="Name">
+                </div>
+
+                <div class="form-group">
+                    <label>Address</label>
+                    <input type="text" [(ngModel)]="employeeaddress" [ngModelOptions]="{standalone: true}" class="form-control" placeholder="Address">
+                </div>
+               
+                <div class="form-group">
+                    <label>Mobile</label>
+                    <input type="text" [(ngModel)]="mobile" [ngModelOptions]="{standalone: true}" class="form-control" placeholder="Mobile">
+                </div>
+                
+                <br/>
+                <div class="form-group">
+                    <button type="reset" class="btn btn-danger pull right" (click)="clearData()">Clear</button>&nbsp;
+                    <!-- <button type="button" class="btn btn-primary pull right">Save</button> -->
+                    <button type="submit" class="btn btn-primary" (click)="save()">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+   <div class="col-md-7">
+    <h4>List Employees</h4>
+    <hr/>
+    <div class="card card-body bg-light">
+        <Table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Address</th>
+                    <th scope="col">Mobile</th>
+                    <th scope="col">Option</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr *ngFor="let employee of employeeArray">
+                    <th scope="row">{{employee.employeeid}}</th>
+                    <td>{{employee.employeename}}</td>
+                    <td>{{employee.employeeaddress}}</td>
+                    <td>{{employee.mobile}}</td>
+                    <td>
+                        <button class="btn btn-primary" (click)="setUpdate(employee)">Edit</button>&nbsp;
+                        <button class="btn btn-danger" (click)="setDelete(employee)">Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+
+        </Table>
+    </div>
+   </div>
+
+</div>
