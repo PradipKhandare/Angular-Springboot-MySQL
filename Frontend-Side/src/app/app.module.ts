@@ -6,21 +6,24 @@ import { AppComponent } from './app.component';
 import { CustomerComponent } from './customer/customer.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { TaskComponent } from './task/task.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { BreadCrumbComponent } from './bread-crumb/bread-crumb.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CustomerComponent,
     DashboardComponent,
-    TaskComponent
+    TaskComponent,
+    BreadCrumbComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   providers: [
     provideClientHydration()

@@ -1,5 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
+import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
+import { BreadCrumbService } from '../servive/bread-crumb.service';
 
 @Component({
   selector: 'app-customer',
@@ -8,6 +10,23 @@ import { Component } from '@angular/core';
 })
 export class CustomerComponent {
 
+  integerRegX = /^\d+$/
+
+  registerForm = new FormGroup({
+    name: new FormControl("", [Validators.required, Validators.maxLength(32)]),
+    address: new FormControl("", [Validators.required, Validators.maxLength(40)]),
+   mobile : new FormControl("", [Validators.required,  Validators.maxLength(10), Validators.minLength(10), Validators.pattern(this.integerRegX)] )
+  })
+  
+  getControl(name : any): AbstractControl | null {
+    return this.registerForm.get(name)
+  }
+
+
+  registerFn(){
+    console.log(this.registerForm.value)
+  }
+
   employeeArray: any[] = []
   employeename: String = ""
   employeeaddress: String = ""
@@ -15,10 +34,16 @@ export class CustomerComponent {
 
   currentEmployeeID = ""
 
-constructor(private http: HttpClient){
-  this.getAllEmployee()
+constructor(private http: HttpClient, private breadcrumbservice:BreadCrumbService){
+  
 }
 
+ngOnInit(){
+  this.setBreadcrumbs();
+  this.getAllEmployee();
+}
+
+//Done In Unit Testing
 getAllEmployee(){
   this.http.get("http://localhost:8080/api/v1/employee/getAllEmployees").subscribe((resultData: any)=>{
     console.log(resultData)
@@ -26,6 +51,7 @@ getAllEmployee(){
   })
 }
 
+//Done In Unit Testing
 register(){
   let bodyData = {
     "employeename": this.employeename,
@@ -93,5 +119,13 @@ setDelete(data: any){
     this.mobile = 0
 
   })
+}
+
+private setBreadcrumbs(){
+     
+  this.breadcrumbservice.setBreadcrumbs([
+    { label:'Home', url:'/' },
+    { label: 'All Customers', url:'/customer'}
+  ])
 }
 }
