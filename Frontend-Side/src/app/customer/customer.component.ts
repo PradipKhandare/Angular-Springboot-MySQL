@@ -22,7 +22,6 @@ export class CustomerComponent {
     return this.registerForm.get(name)
   }
 
-
   registerFn(){
     console.log(this.registerForm.value)
   }
@@ -83,6 +82,7 @@ setUpdate(data: any){
   this.currentEmployeeID = data.employeeid; // Update to use employeeid
 }
 
+//Done In Unit Testing
 updateRecords(){
   let bodyData = {
     "employeeid": this.currentEmployeeID,

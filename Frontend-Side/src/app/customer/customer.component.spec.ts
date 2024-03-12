@@ -31,7 +31,6 @@ describe('CustomerComponent', () => {
         httpMock.verify();
       });
 
-
     it('should send data to the server', () => {
         spyOn(component, 'getAllEmployee');
 
@@ -107,7 +106,6 @@ describe('CustomerComponent', () => {
             expect(component.getAllEmployee).toHaveBeenCalled()
         })
 
-
         it('should delete the data', () => {
             spyOn(component, 'getAllEmployee')
             const data = {employeeid: '123'}
@@ -123,5 +121,75 @@ describe('CustomerComponent', () => {
             expect(component.employeename).toBe('')
             expect(component.employeeaddress).toBe('')
             expect(component.mobile).toBe(0)
+        })
+
+        it('should call and getAllEmployee on ngOnInit', () => {
+            spyOn(component, 'getAllEmployee')
+            component.ngOnInit();
+            // expect(component.setBreadcrumbs).toHaveBeenCalled();
+            expect(component.getAllEmployee).toHaveBeenCalled();
+        })
+
+        it('should set update data correctly', () => {
+            const testData = {
+                employeename: 'Pradip Khandare',
+                employeeaddress: 'Pune',
+                mobile: 99999999,
+                employeeid: '1'
+            }
+
+            component.setUpdate(testData);
+
+            expect(component.employeename).toEqual(testData.employeename)
+            expect(component.employeeaddress).toEqual(testData.employeeaddress)
+            expect(component.mobile).toEqual(testData.mobile)
+            expect(component.currentEmployeeID).toEqual(testData.employeeid)
+        })
+
+        it('should called register() if currentEmployeeID is empty', () => {
+            spyOn(component, 'register')
+            component.currentEmployeeID = '';
+            component.save();
+
+            expect(component.register).toHaveBeenCalled();
+        })
+
+        it('should called updateRecords() if currentEmployee is not empty', () => {
+            spyOn(component, 'updateRecords')
+            component.currentEmployeeID = '1'
+
+            component.save();
+
+            expect(component.updateRecords).toHaveBeenCalled();
+        })
+
+        it('should clear the data when called clear()', () => {
+            const testData = {
+                employeename: 'Pradip Khandare',
+                employeeaddress: 'Pune',
+                mobile: 99999999
+            }
+
+            component.clearData();
+
+            expect(component.employeename).toBe('')
+            expect(component.employeeaddress).toBe('')
+            expect(component.mobile).toBe(0)
+        })
+
+        it('should return control if control is exist', () => {
+            const control = component.getControl('name');
+            expect(control).toBeTruthy();
+        })
+
+        it('should return null if control does not exist', () => {
+            const control = component.getControl('invalidName');
+            expect(control).toBeNull();
+        })
+
+        it('should print value of register form on console', () => {
+            spyOn(console, 'log');
+            component.registerFn();
+            expect(console.log).toHaveBeenCalledWith(component.registerForm.value)
         })
 })
