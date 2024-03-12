@@ -3,62 +3,72 @@
         <h4>Create Employee</h4>
         <hr/>
         <div class="card card-body bg-light">
-            <form class="form-horizantal">
+            <form class="form-horizontal" [formGroup]="registerForm" (ngSubmit)="registerFn()">
                 <div class="form-group">
-                    <label>Name</label>
-                    <input type="text" [(ngModel)]="employeename" [ngModelOptions]="{standalone: true}" class="form-control" placeholder="Name">
+                    <label for="name" class="form-label">Name</label>
+                    <input type="text" id="name" [(ngModel)]="employeename" class="form-control" placeholder="Name" formControlName="name" [ngClass]="{error: getControl('name')?.errors && getControl('name')?.touched}">
+                    <div *ngIf="getControl('name')?.errors && getControl('name')?.touched">
+                            <small class="text-danger" *ngIf="getControl('name')?.errors?.['required']">First name is required</small>
+                            <small class="text-danger" *ngIf="getControl('name')?.errors?.['maxlength']">Only 32 characters are allowed</small>
+                    </div>
                 </div>
 
                 <div class="form-group">
-                    <label>Address</label>
-                    <input type="text" [(ngModel)]="employeeaddress" [ngModelOptions]="{standalone: true}" class="form-control" placeholder="Address">
+                    <label for="address" class="form-label">Address</label>
+                    <input type="text" id="address" [(ngModel)]="employeeaddress" class="form-control" placeholder="Address" formControlName="address" [ngClass]="{error: getControl('address')?.errors && getControl('address')?.touched}">
+                    <div *ngIf="getControl('address')?.errors && getControl('address')?.touched">
+                        <small class="text-danger" *ngIf="getControl('address')?.errors?.['required']">Address is required</small>
+                        <small class="text-danger" *ngIf="getControl('address')?.errors?.['maxlength']">Only 40 characters are allowed</small>
+                </div>
                 </div>
                
                 <div class="form-group">
-                    <label>Mobile</label>
-                    <input type="text" [(ngModel)]="mobile" [ngModelOptions]="{standalone: true}" class="form-control" placeholder="Mobile">
+                    <label for="mobile" class="form-label">Mobile</label>
+                    <input type="text" id="mobile" [(ngModel)]="mobile" class="form-control" placeholder="Mobile" formControlName="mobile" [ngClass]="{error: getControl('mobile')?.errors && getControl('mobile')?.touched}">
+                    <div *ngIf="getControl('mobile')?.errors && getControl('mobile')?.touched">
+                        <small class="text-danger" *ngIf="getControl('mobile')?.errors?.['required']">Mobile number is required</small>
+                        <small class="text-danger" *ngIf="getControl('mobile')?.errors?.['maxlength'] || getControl('mobile')?.errors?.['minlength'] || getControl('mobile')?.errors?.['pattern']">Only valid mobile number is allowed</small>
+                      
+                </div>
                 </div>
                 
                 <br/>
                 <div class="form-group">
-                    <button type="reset" class="btn btn-danger pull right" (click)="clearData()">Clear</button>&nbsp;
-                    <!-- <button type="button" class="btn btn-primary pull right">Save</button> -->
-                    <button type="submit" class="btn btn-primary" (click)="save()">Save</button>
+                    <button type="reset" class="btn btn-danger pull-right" (click)="clearData()">Clear</button>&nbsp;
+                    <button type="submit" class="btn btn-primary">Save</button>
                 </div>
             </form>
         </div>
     </div>
 
-   <div class="col-md-7">
-    <h4>List Employees</h4>
-    <hr/>
-    <div class="card card-body bg-light">
-        <Table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Address</th>
-                    <th scope="col">Mobile</th>
-                    <th scope="col">Option</th>
-                </tr>
-            </thead>
+    <div class="col-md-7">
+        <h4>List Employees</h4>
+        <hr/>
+        <div class="card card-body bg-light">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Address</th>
+                        <th scope="col">Mobile</th>
+                        <th scope="col">Option</th>
+                    </tr>
+                </thead>
 
-            <tbody>
-                <tr *ngFor="let employee of employeeArray">
-                    <th scope="row">{{employee.employeeid}}</th>
-                    <td>{{employee.employeename}}</td>
-                    <td>{{employee.employeeaddress}}</td>
-                    <td>{{employee.mobile}}</td>
-                    <td>
-                        <button class="btn btn-primary" (click)="setUpdate(employee)">Edit</button>&nbsp;
-                        <button class="btn btn-danger" (click)="setDelete(employee)">Delete</button>
-                    </td>
-                </tr>
-            </tbody>
-
-        </Table>
+                <tbody>
+                    <tr *ngFor="let employee of employeeArray">
+                        <th scope="row">{{employee.employeeid}}</th>
+                        <td>{{employee.employeename}}</td>
+                        <td>{{employee.employeeaddress}}</td>
+                        <td>{{employee.mobile}}</td>
+                        <td>
+                            <button class="btn btn-primary" (click)="setUpdate(employee)">Edit</button>&nbsp;
+                            <button class="btn btn-danger" (click)="setDelete(employee)">Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
-   </div>
-
 </div>
